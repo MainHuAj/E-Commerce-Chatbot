@@ -6,12 +6,20 @@ client = Groq()
 def route_query(query):
     prompt = f"""
     Classify the user query into one of:
-    - faq
-    - sql
-    - other
-    Do not give any explanation or preamble just faq or sql or other for example if the query is like "Do you accept cash payment " then reply with faq
+- faq: questions about policies, payments, refunds, returns, tracking, discounts
+- sql: questions about finding, searching, or filtering products by brand, price, rating, discount, size, or any product attributes
+- other: anything unrelated to the platform
 
-    Query: {query}
+Examples:
+- "give me top rated puma shoes" → sql
+- "show me nike shoes under 2000" → sql
+- "what is your return policy" → faq
+- "do you accept UPI" → faq
+- "how are you" → other
+
+Just reply with: faq, sql, or other. No explanation.
+
+Query: {query}
     """
 
     res = client.chat.completions.create(
