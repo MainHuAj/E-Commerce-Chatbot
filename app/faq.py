@@ -1,7 +1,8 @@
 import pandas as pd
 from pathlib import Path
 import chromadb
-from chromadb.utils import embedding_functions
+# from chromadb.utils import embedding_functions
+from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 from groq import Groq
 from dotenv import load_dotenv
 import os
@@ -12,9 +13,10 @@ faqs_path = Path(__file__).parent/"resources/faq_data.csv"
 client = chromadb.Client()
 collection_name_faq ="faqs"
 groq_client = Groq()
-ef = embedding_functions.SentenceTransformerEmbeddingFunction(
-    model_name = 'sentence-transformers/all-MiniLM-L6-v2'
-)
+# ef = embedding_functions.SentenceTransformerEmbeddingFunction(
+#     model_name = 'sentence-transformers/all-MiniLM-L6-v2'
+# )
+ef = DefaultEmbeddingFunction()
 
 def ingest_faq_data(path):
     if collection_name_faq not in [c.name for c in  client.list_collections()]:
